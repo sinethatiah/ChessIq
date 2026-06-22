@@ -11,3 +11,9 @@ def fetch_archives(username):
     response= requests.get(url , headers=HEADERS)
     data=response.json()
     return data["archives"]
+
+def fetch_games(url):
+    response= requests.get(url , headers=HEADERS)
+    data=response.json()
+    return data["games"]
+
