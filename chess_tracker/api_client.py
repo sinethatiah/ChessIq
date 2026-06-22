@@ -17,3 +17,11 @@ def fetch_games(url):
     data=response.json()
     return data["games"]
 
+def fetch_all_games(username):
+    archives=fetch_archives(username)
+    all_games=[]
+    for url in archives:
+        games=fetch_games(url)
+        all_games.extend(games)
+    return all_games
+
