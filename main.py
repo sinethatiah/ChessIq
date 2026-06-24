@@ -1,7 +1,7 @@
 from chess_tracker.api_client import fetch_all_games
 from chess_tracker.models import ChessGame
 import json
-from chess_tracker.analysis import win_rate_by_colour , win_rate_by_opening, performance_by_hour, rating_over_time, win_rate_by_opponent_gap
+from chess_tracker.analysis import win_rate_by_colour , win_rate_by_opening, performance_by_hour, rating_over_time, win_rate_by_opponent_gap , streak_tracking
 
 # all_games = fetch_all_games("grandlord500")
 # print(f"Total games fetched: {len(all_games)}")
@@ -56,7 +56,13 @@ tracking rating with time
 """
 analysis of opponent rating gap
 """
-gaps = win_rate_by_opponent_gap(games)
-for bucket, data in gaps.items():
-    print(f"{bucket}: {data}")
+# gaps = win_rate_by_opponent_gap(games)
+# for bucket, data in gaps.items():
+#     print(f"{bucket}: {data}")
+
+"""
+tracking of streaks
+"""
+streaks=streak_tracking(games)
+print(streaks)
     

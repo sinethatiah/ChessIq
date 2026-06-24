@@ -98,5 +98,36 @@ def win_rate_by_opponent_gap(games):
 
     return results
 
+def streak_tracking(games):
+    sorted_games = sorted(games, key=lambda x: x.date)
+
+    current_streak = {"type": None, "count": 0}
+    best_win_streak = 0
+    best_loss_streak = 0
+    current_win_streak = 0
+    current_loss_streak = 0
+
+    for game in sorted_games:
+        outcome=game.outcome()
+        if outcome == "win":
+            current_win_streak+=1
+            current_loss_streak=0
+            if current_win_streak>best_win_streak:
+                best_win_streak=current_win_streak
+        elif outcome=="loss":
+            current_loss_streak+=1
+            current_win_streak=0
+            if current_loss_streak>best_loss_streak:
+                best_loss_streak=current_loss_streak
+        else:
+            current_win_streak=0
+            current_loss_streak=0
+    return {
+        "best_win_streak": best_win_streak,
+        "best_loss_streak": best_loss_streak,
+        "current_win_streak": current_win_streak,
+        "current_loss_streak": current_loss_streak,
+    }
+
 
 
