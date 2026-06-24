@@ -1,9 +1,9 @@
 from chess_tracker.api_client import fetch_all_games
 from chess_tracker.models import ChessGame
 import json
-from chess_tracker.analysis import win_rate_by_colour
+from chess_tracker.analysis import win_rate_by_colour , win_rate_by_opening
 
-all_games = fetch_all_games("grandlord500")
+# all_games = fetch_all_games("grandlord500")
 # print(f"Total games fetched: {len(all_games)}")
 
 # print(json.dumps(all_games[0], indent=2))
@@ -12,6 +12,24 @@ raw_games=fetch_all_games("grandlord500")
 games = [ChessGame (g, "grandlord500") for g in raw_games if g["time_class"]== "rapid"]
 # print(f"Rapid games: {len(games)}")
 # print(games[0].to_dict())
-results=win_rate_by_colour(games)
-for colour, data in results.items():
-    print(f"{colour}:{data}")
+
+
+# results=win_rate_by_colour(games)
+# for colour, data in results.items():
+#     print(f"{colour}:{data}")
+
+
+# openings = win_rate_by_opening(games)
+# for opening, data in openings.items():
+#     print(f"{opening}: {data}")
+
+
+openings = win_rate_by_opening(games)
+print(f"Total games: {len(games)}")
+print(f"Total openings found: {len(openings)}")
+# print(games[0].opening)
+# print(games[1].opening)
+# print(games[2].opening)
+sorted_openings = sorted(openings.items(), key=lambda x: x[1]["total"], reverse=True)
+for opening, data in sorted_openings[:15]:
+    print(f"{opening}: {data}")

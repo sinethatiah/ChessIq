@@ -15,3 +15,23 @@ def win_rate_by_colour(games):
             data["draw%"] = round(data["draw"] / total * 100, 1)
             data["loss%"] = round(data["loss"] / total * 100, 1)
     return results
+
+
+def win_rate_by_opening(games):
+    results={}
+    for game in games:
+        opening=game.opening
+        outcome=game.outcome()
+        if opening not in results:
+            results[opening]={"win": 0, "draw": 0, "loss": 0, "total": 0}
+        results[opening][outcome]+=1
+        results[opening]["total"]+=1
+    
+    for opening, data in results.items():
+        total=data["total"]
+        if total > 0:
+            data["win%"] = round(data["win"] / total * 100, 1)
+            data["draw%"] = round(data["draw"] / total * 100, 1)
+            data["loss%"] = round(data["loss"] / total * 100, 1)
+    return results
+
