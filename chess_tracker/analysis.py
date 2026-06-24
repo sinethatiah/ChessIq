@@ -53,6 +53,16 @@ def performance_by_hour(games):
             data["loss%"] = round(data["loss"] / total * 100, 1)
     return results
 
+def rating_over_time(games):
+    sorted_games=sorted(games, key=lambda x: x.date)
+    results=[]
 
+    for game in sorted_games:
+        results.append({
+            "date":game.date.isoformat(),
+            "rating":game.my_rating,
+            "time_class":game.time_class
+        })
+    return results
 
 
