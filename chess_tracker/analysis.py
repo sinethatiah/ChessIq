@@ -65,4 +65,38 @@ def rating_over_time(games):
         })
     return results
 
+def win_rate_by_opponent_gap(games):
+    results = {
+        "much stronger (>100)": {"win": 0, "draw": 0, "loss": 0, "total": 0},
+        "stronger (50-100)": {"win": 0, "draw": 0, "loss": 0, "total": 0},
+        "even (-50 to 50)": {"win": 0, "draw": 0, "loss": 0, "total": 0},
+        "weaker (50-100)": {"win": 0, "draw": 0, "loss": 0, "total": 0},
+        "much weaker (>100)": {"win": 0, "draw": 0, "loss": 0, "total": 0},
+    }
+    for game in games:
+        gap=game.opp_rating - game.my_rating
+        outcome=game.outcome()
+        if gap > 100:
+            bucket = "much stronger (>100)"
+        elif gap > 50:
+            bucket = "stronger (50-100)"
+        elif gap >= -50:
+            bucket = "even (-50 to 50)"
+        elif gap >= -100:
+            bucket = "weaker (50-100)"
+        else:
+            bucket = "much weaker (>100)"
+
+        results[bucket][outcome] += 1
+        results[bucket]["total"] += 1
+    for bucket , data in results.items():
+        total = data["total"]
+        if total > 0:
+            data["win%"] = round(data["win"] / total * 100, 1)
+            data["draw%"] = round(data["draw"] / total * 100, 1)
+            data["loss%"] = round(data["loss"] / total * 100, 1)
+
+    return results
+
+
 
