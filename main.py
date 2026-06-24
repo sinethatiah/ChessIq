@@ -1,7 +1,7 @@
 from chess_tracker.api_client import fetch_all_games
 from chess_tracker.models import ChessGame
 import json
-from chess_tracker.analysis import win_rate_by_colour , win_rate_by_opening
+from chess_tracker.analysis import win_rate_by_colour , win_rate_by_opening, performance_by_hour
 
 # all_games = fetch_all_games("grandlord500")
 # print(f"Total games fetched: {len(all_games)}")
@@ -24,12 +24,17 @@ games = [ChessGame (g, "grandlord500") for g in raw_games if g["time_class"]== "
 #     print(f"{opening}: {data}")
 
 
-openings = win_rate_by_opening(games)
-print(f"Total games: {len(games)}")
-print(f"Total openings found: {len(openings)}")
+# openings = win_rate_by_opening(games)
+# print(f"Total games: {len(games)}")
+# print(f"Total openings found: {len(openings)}")
 # print(games[0].opening)
 # print(games[1].opening)
 # print(games[2].opening)
-sorted_openings = sorted(openings.items(), key=lambda x: x[1]["total"], reverse=True)
-for opening, data in sorted_openings[:15]:
-    print(f"{opening}: {data}")
+# sorted_openings = sorted(openings.items(), key=lambda x: x[1]["total"], reverse=True)
+# for opening, data in sorted_openings[:15]:
+#     print(f"{opening}: {data}")
+
+hourly = performance_by_hour(games)
+sorted_hours = sorted(hourly.items())
+for hour, data in sorted_hours:
+    print(f"{hour:02d}:00 - {data}")

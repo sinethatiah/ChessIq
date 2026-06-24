@@ -35,3 +35,24 @@ def win_rate_by_opening(games):
             data["loss%"] = round(data["loss"] / total * 100, 1)
     return results
 
+def performance_by_hour(games):
+    results={}
+    for game in games:
+        hour=game.date.hour
+        outcome=game.outcome()
+        if hour not in results:
+            results[hour]={"win": 0, "draw": 0, "loss": 0, "total": 0}
+        results[hour][outcome]+=1
+        results[hour]["total"]+=1
+
+    for hour, data in results.items():
+        total=data["total"]
+        if total > 0:
+            data["win%"] = round(data["win"] / total * 100, 1)
+            data["draw%"] = round(data["draw"] / total * 100, 1)
+            data["loss%"] = round(data["loss"] / total * 100, 1)
+    return results
+
+
+
+
