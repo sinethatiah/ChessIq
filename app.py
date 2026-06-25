@@ -3,6 +3,15 @@ from tkinter import ttk
 
 from chess_tracker.api_client import fetch_all_games
 from chess_tracker.models import ChessGame
+from chess_tracker.analysis import (
+    win_rate_by_colour,
+    win_rate_by_opening,
+    performance_by_hour,
+    rating_over_time,
+    win_rate_by_opponent_gap,
+    streak_tracking,
+    time_trouble_rate
+)
 
 USERNAME = "grandlord500"
 TIME_CONTROLS = ["rapid", "blitz"]
@@ -15,7 +24,33 @@ def onclick():
     btn.config(text="loading..." , state="disabled")
     root.update()
     games=load_games()
+    build_tabs(games)
     btn.config(text="Done!", state="disabled")
+
+def build_tabs(games):
+    for tab in notebook.tabs():
+        notebook.forget(tab)
+
+
+    frame = tk.Frame(notebook)
+    notebook.add(frame, text="Colour")
+    results = win_rate_by_colour(games)
+    headers = ("Colour", "Win%", "Draw%", "Loss%", "Games")
+    rows = [(c.capitalize(), d["win%"], d["draw%"], d["loss%"], d["total"])
+            for c, d in results.items()]
+    make_table(frame, headers, rows)
+
+def make_table(frame, headers, rows):
+    tree = ttk.Treeview(frame, columns=headers, show="headings")
+    for col in headers:
+        tree.heading(col, text=col)
+        tree.column(col, width=160, anchor="center")
+    for row in rows:
+        tree.insert("", "end", values=row)
+    scrollbar = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
+    tree.configure(yscrollcommand=scrollbar.set)
+    tree.pack(side="left", fill="both", expand=True)
+    scrollbar.pack(side="right", fill="y")
 
 root=tk.Tk()
 root.title("chessIQ")
@@ -29,5 +64,9 @@ subtitle_label.pack()
 
 btn = tk.Button(root, text="Generate Report", font=("Arial", 12), command=onclick)
 btn.pack(pady=15)
+
+notebook = ttk.Notebook(root)
+notebook.pack(fill="both", expand=True, padx=10, pady=10)
+
 
 root.mainloop()
