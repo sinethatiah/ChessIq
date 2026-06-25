@@ -60,6 +60,15 @@ def build_tabs(games):
             for h, d in sorted_hours]
     make_table(frame, headers, rows)
 
+    # Opponent strength tab
+    frame = tk.Frame(notebook)
+    notebook.add(frame, text="Opponent Strength")
+    gaps = win_rate_by_opponent_gap(games)
+    headers = ("Bucket", "Win%", "Draw%", "Loss%", "Games")
+    rows = [(b, d["win%"], d["draw%"], d["loss%"], d["total"])
+            for b, d in gaps.items() if d["total"] > 0]
+    make_table(frame, headers, rows)
+
 
 
 def make_table(frame, headers, rows):
