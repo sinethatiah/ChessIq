@@ -31,7 +31,7 @@ def build_tabs(games):
     for tab in notebook.tabs():
         notebook.forget(tab)
 
-
+    #colour tab
     frame = tk.Frame(notebook)
     notebook.add(frame, text="Colour")
     results = win_rate_by_colour(games)
@@ -39,6 +39,19 @@ def build_tabs(games):
     rows = [(c.capitalize(), d["win%"], d["draw%"], d["loss%"], d["total"])
             for c, d in results.items()]
     make_table(frame, headers, rows)
+
+    # Openings tab
+    frame = tk.Frame(notebook)
+    notebook.add(frame, text="Openings")
+    openings = win_rate_by_opening(games)
+    sorted_openings = sorted(openings.items(), key=lambda x: x[1]["total"], reverse=True)
+    headers = ("Opening", "Win%", "Draw%", "Loss%", "Games")
+    rows = [(o.replace("-", " ")[:50], d["win%"], d["draw%"], d["loss%"], d["total"])
+            for o, d in sorted_openings[:20]]
+    make_table(frame, headers, rows)
+
+    
+
 
 def make_table(frame, headers, rows):
     tree = ttk.Treeview(frame, columns=headers, show="headings")
