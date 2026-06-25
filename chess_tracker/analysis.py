@@ -129,5 +129,29 @@ def streak_tracking(games):
         "current_loss_streak": current_loss_streak,
     }
 
+def time_trouble_rate(games):
+    sorted_games = sorted(games, key=lambda x: x.date)
 
+    monthly={}
+    
+    for game in sorted_games:
+        month= game.date.strftime("%Y-%m")
+        outcome=game.outcome()
+
+        if month not in monthly:
+            monthly[month] = {"time_losses": 0, "total_losses": 0, "total_games": 0}
+    
+        monthly[month]["total_games"] += 1
+        
+        if outcome =="loss":
+            monthly[month]["total_losses"]+=1
+            if game.was_time_loss():
+               monthly[month]["time_losses"]+=1 
+    for month, data in monthly.items():
+        if data["total_losses"] > 0:
+            data["time_loss%"] = round(data["time_losses"] / data["total_losses"] * 100, 1)
+        else:
+            data["time_loss%"] = 0.0
+
+    return monthly
 
