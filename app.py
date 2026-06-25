@@ -69,6 +69,18 @@ def build_tabs(games):
             for b, d in gaps.items() if d["total"] > 0]
     make_table(frame, headers, rows)
 
+     # Streaks tab
+    frame = tk.Frame(notebook)
+    notebook.add(frame, text="Streaks")
+    streaks = streak_tracking(games)
+    headers = ("Metric", "Value")
+    rows = [
+        ("Best win streak", streaks["best_win_streak"]),
+        ("Best loss streak", streaks["best_loss_streak"]),
+        ("Current win streak", streaks["current_win_streak"]),
+        ("Current loss streak", streaks["current_loss_streak"]),
+    ]
+    make_table(frame, headers, rows)
 
 
 def make_table(frame, headers, rows):
