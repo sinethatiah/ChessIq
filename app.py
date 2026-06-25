@@ -82,6 +82,23 @@ def build_tabs(games):
     ]
     make_table(frame, headers, rows)
 
+    # Time trouble tab
+    frame = tk.Frame(notebook)
+    notebook.add(frame, text="Time Trouble")
+    tt = time_trouble_rate(games)
+    headers = ("Month", "Time Losses", "Total Losses", "Games", "% of Losses")
+    rows = [(m, d["time_losses"], d["total_losses"], d["total_games"], f"{d['time_loss%']}%")
+            for m, d in tt.items()]
+    make_table(frame, headers, rows)
+
+    # Rating tab
+    frame = tk.Frame(notebook)
+    notebook.add(frame, text="Rating")
+    ratings = rating_over_time(games)
+    headers = ("Date", "Rating", "Time Class")
+    rows = [(r["date"][:10], r["rating"], r["time_class"]) for r in ratings]
+    make_table(frame, headers, rows)
+
 
 def make_table(frame, headers, rows):
     tree = ttk.Treeview(frame, columns=headers, show="headings")
