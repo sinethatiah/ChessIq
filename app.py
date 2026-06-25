@@ -50,7 +50,16 @@ def build_tabs(games):
             for o, d in sorted_openings[:20]]
     make_table(frame, headers, rows)
 
-    
+    # Hours tab
+    frame = tk.Frame(notebook)
+    notebook.add(frame, text="Hours (UTC)")
+    hourly = performance_by_hour(games)
+    sorted_hours = sorted(hourly.items())
+    headers = ("Hour", "Win%", "Draw%", "Loss%", "Games")
+    rows = [(f"{str(h).zfill(2)}:00", d["win%"], d["draw%"], d["loss%"], d["total"])
+            for h, d in sorted_hours]
+    make_table(frame, headers, rows)
+
 
 
 def make_table(frame, headers, rows):
