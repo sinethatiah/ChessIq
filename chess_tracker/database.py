@@ -64,3 +64,21 @@ def insert_many(games):
     ])
     conn.commit()
     conn.close()
+
+def get_all_games():
+    conn =sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM games")
+    rows= cursor.fetchall()
+    conn.close()
+    return rows
+
+
+def is_empty():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM games")
+    count= cursor.fetchone()[0]
+    conn.close()
+    return count == 0
+
