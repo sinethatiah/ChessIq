@@ -69,6 +69,8 @@ tracking of streaks
 """
 analysis of loss rate due to time
 """
-time_trouble = time_trouble_rate(games)
-for month, data in time_trouble.items():
-    print(f"{month}: {data}")
+# time_trouble = time_trouble_rate(games)
+# for month, data in time_trouble.items():
+#     print(f"{month}: {data}")
+
+
