@@ -81,4 +81,7 @@ def is_empty():
     count= cursor.fetchone()[0]
     conn.close()
     return count == 0
-
+def row_to_dict(row):
+    keys = ["id", "date", "colour", "my_rating", "opp_rating",
+            "result", "outcome", "opening", "time_class", "was_time_loss"]
+    return dict(zip(keys, row))
