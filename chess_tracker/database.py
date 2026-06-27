@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 DB_PATH = "data/games.db"
 
@@ -81,7 +82,34 @@ def is_empty():
     count= cursor.fetchone()[0]
     conn.close()
     return count == 0
+
+
 def row_to_dict(row):
     keys = ["id", "date", "colour", "my_rating", "opp_rating",
             "result", "outcome", "opening", "time_class", "was_time_loss"]
     return dict(zip(keys, row))
+
+class DBGame:
+    def __init__(self, row):
+        d = row_to_dict(row)
+        self.date = datetime.fromisoformat(d["date"])
+        self.colour = d["colour"]
+        self.my_rating = d["my_rating"]
+        self.opp_rating = d["opp_rating"]
+        self.result = d["result"]
+        self._outcome = d["outcome"]
+        self.opening = d["opening"]
+        self.time_class = d["time_class"]
+        self._was_time_loss = bool(d["was_time_loss"])
+
+    def outcome(self):
+        return self._outcome
+
+    def was_time_loss(self):
+        return self._was_time_loss
+
+    def is_win(self):
+        return self._outcome == "win"
+
+    def is_loss(self):
+        return self._outcome == "loss"
