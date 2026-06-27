@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+
 from chess_tracker.api_client import fetch_all_games
 from chess_tracker.models import ChessGame
 from chess_tracker.analysis import (
@@ -13,12 +14,20 @@ from chess_tracker.analysis import (
     time_trouble_rate
 )
 
+from chess_tracker.database import init_db, insert_many, get_all_games, is_empty, DBGame
+
 USERNAME = "grandlord500"
 TIME_CONTROLS = ["rapid", "blitz"]
 
 def load_games():
-    raw_games=fetch_all_games(USERNAME)
-    return[ChessGame(g, USERNAME) for g in raw_games if g["time_class"] in TIME_CONTROLS]
+    init_db()
+    if is_empty():
+        print("Fetching from API...")
+        raw_games = fetch_all_games(USERNAME)
+        games = [ChessGame(g, USERNAME) for g in raw_games if g["time_class"] in TIME_CONTROLS]
+        insert_many(games)
+    rows = get_all_games()
+    return [DBGame(row) for row in rows]
 
 def onclick():
     btn.config(text="loading..." , state="disabled")
