@@ -18,7 +18,7 @@ from chess_tracker.analysis import (
 from chess_tracker.database import init_db, insert_many, get_all_games, is_empty, DBGame
 
 ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("blue")
+ctk.set_default_color_theme("dark-blue")
 
 
 USERNAME = "grandlord500"
@@ -133,24 +133,30 @@ def make_table(frame, headers, rows):
 root = ctk.CTk()
 root.title("chessIQ")
 root.geometry("1100x700")
+root.configure(fg_color="#1a1a1a")
 
 style = ttk.Style()
 style.theme_use("clam")
-style.configure("TNotebook", background="#2b2b2b", borderwidth=0)
-style.configure("TNotebook.Tab", background="#2b2b2b", foreground="white", padding=[15, 8], font=("Arial", 11))
-style.configure("Treeview", background="#2b2b2b", foreground="white", fieldbackground="#2b2b2b", rowheight=25)
-style.configure("Treeview.Heading", background="#1f1f1f", foreground="white")
-style.map("TNotebook.Tab", background=[("selected", "#1f6aa5")])
+style.configure("TNotebook", background="#1a1a1a", borderwidth=0)
+style.configure("TNotebook.Tab", background="#1a1a1a", foreground="white", 
+                padding=[15, 8], font=("Arial", 11))
+style.configure("Treeview", background="#2b2b2b", foreground="white", 
+                fieldbackground="#2b2b2b", rowheight=30)
+style.configure("Treeview.Heading", background="#1a1a1a", foreground="#c9a227",
+                font=("Arial", 13, "bold"))
+style.map("TNotebook.Tab", background=[("selected", "#c9a227")],
+          foreground=[("selected", "black")])
+
 
 title_label = ctk.CTkLabel(root, text="ChessIQ", font=("Arial", 32, "bold"))
 title_label.pack(pady=20)
 
 subtitle_label = ctk.CTkLabel(root, text=f"Analytics for {USERNAME}", font=("Arial", 14))
 subtitle_label.pack()
-
-btn = ctk.CTkButton(root, text="Generate Report", font=("Arial", 12), command=onclick)
+btn = ctk.CTkButton(root, text="Generate Report", font=("Arial", 12), 
+                    command=onclick, fg_color="#c9a227", hover_color="#a8841e",
+                    text_color="black")
 btn.pack(pady=15)
-
 notebook = ttk.Notebook(root)
 notebook.pack(fill="both", expand=True, padx=10, pady=10)
 
