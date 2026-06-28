@@ -1,6 +1,3 @@
-# import tkinter as tk
-# from tkinter import ttk
-
 import customtkinter as ctk
 from tkinter import ttk
 
@@ -140,7 +137,7 @@ root.geometry("1100x700")
 style = ttk.Style()
 style.theme_use("clam")
 style.configure("TNotebook", background="#2b2b2b", borderwidth=0)
-style.configure("TNotebook.Tab", background="#2b2b2b", foreground="white", padding=[10, 5])
+style.configure("TNotebook.Tab", background="#2b2b2b", foreground="white", padding=[15, 8], font=("Arial", 11))
 style.configure("Treeview", background="#2b2b2b", foreground="white", fieldbackground="#2b2b2b", rowheight=25)
 style.configure("Treeview.Heading", background="#1f1f1f", foreground="white")
 style.map("TNotebook.Tab", background=[("selected", "#1f6aa5")])
