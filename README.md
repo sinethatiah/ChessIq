@@ -69,8 +69,6 @@ pip install requests python-chess
 ### Chess.com API
 No API key or signup required — the public endpoints are open to anyone.
  
-### Stockfish (optional, for blunder detection)
-Download the binary from stockfishchess.org and note its install path — needed by `engine.py`.
  
 ## Running Locally
  
