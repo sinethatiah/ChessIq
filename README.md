@@ -107,4 +107,4 @@ Contributions are welcome. If you find a bug or have a feature idea, open an iss
 7. Open a pull request on the original repository
 ## Licensing
  
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
